@@ -1,0 +1,15 @@
+{
+    "name": "badge-bot-web",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "dependencies": {
+        "app-root-path": "^2.2.1",
+        "async": "^3.1.0",
+        "gists": "^2.0.0",
+        "moment": "^2.24.0",
+        "twit": "^2.2.11",
+        "underscore": "^1.9.1",
+        "winston": "^3.2.1"
+    }
+}

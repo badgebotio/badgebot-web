@@ -1,0 +1,7 @@
+.DS_Store
+config/config.js
+config/github.js
+config/twit.js
+/logs
+/node_modules
+
