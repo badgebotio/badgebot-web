@@ -51,7 +51,7 @@ Please read CONTRIBUTING.md (CONTRIBUTING.md) for details on our code of conduct
 
 ## License
 
-This project is licensed under the BCL License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the [BCL License](https://douglass.io/the-bcl)
 
 ## Acknowledgments
 
