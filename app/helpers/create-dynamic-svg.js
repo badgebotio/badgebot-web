@@ -1,4 +1,10 @@
-/* refer to test.js */
+/** 
+
+This file contains the beginnings of code that generates an svg image based on criteria 
+For the time being, the code that converts any svg to png is in svg-to-png.js
+
+credit to @zwallacedev for getting this started
+**/
 
 const window   = require('svgdom');
 const SVG      = require('svg.js')(window);

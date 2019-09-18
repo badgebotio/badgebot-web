@@ -60,7 +60,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 
 body {
   margin: 0;
-  margin-bottom: 60px !important;
+ /* margin-bottom: 60px !important;*/
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 1.25rem;
   font-weight: 400;
@@ -7242,4 +7242,9 @@ img::-moz-selection {
 .xxx-large {
   font-size: 20vw;
   color: gray;
+}
+
+.displayed-badge-image {
+  width: 80%;
+  height: 80%;
 }
