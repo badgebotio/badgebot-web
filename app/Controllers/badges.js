@@ -3,8 +3,8 @@ const https = require('https');
 const request = require("request");
 const convertSvgToPng = require("../helpers/svg-to-png.js");
 
-const dotenv = require('dotenv');
-dotenv.config();
+//const dotenv = require('dotenv');
+//dotenv.config();
 
 exports.read = function(req,res){
 
