@@ -46,7 +46,7 @@ exports.read = function(req,res, next){
                 });
                 badgeSVGFile = response.pipe(file);
                 response.on('end', function () {
-                    console.log('BODY: ' + body);
+                   // console.log('BODY: ' + body);
                         //});
                         badgeSVG = body;
 
@@ -56,6 +56,7 @@ exports.read = function(req,res, next){
                             badgeImage = base64data;
 
                         return res.render('assertion', {
+                            id: req.params.assertionId,
                             title: title,
                             description: badge.description,
                             // badge: badgeFile,
