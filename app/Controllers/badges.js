@@ -8,7 +8,7 @@ dotenv.config();
 
 exports.read = function(req,res){
 
-var badgeClassListGistId = process.env.BADGE_CLASS_LIST_GIST_ID;
+/*var badgeClassListGistId = process.env.BADGE_CLASS_LIST_GIST_ID;
 
     request('https://gist.githubusercontent.com/badgebotio/'+badgeClassGistId+'/raw',
     
@@ -21,6 +21,6 @@ var badgeClassListGistId = process.env.BADGE_CLASS_LIST_GIST_ID;
             title: BadgeBot Badges, 
             description: List of BadgeBot Badges
         );
-    });
+    });*/
 
 }
