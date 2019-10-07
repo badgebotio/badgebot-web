@@ -11,17 +11,17 @@ const badgeHeight = 400;
 const badgeWidth = 400;
 
 
-module.exports = function(svgData, width, height) {
+module.exports = function(svgData) {
 
 const draw = SVG(document.documentElement);
-const svg = draw.svg(svgData).width(width).height(height);
+const svg = draw.svg(svgData).width(badgeWidth).height(badgeHeight);
 
 return localConvert(svg.svg());
 }
 
 
 async function localConvert(input, outputFilePath) {
-    let options = { width: width, height: height };
+    let options = { width: badgeWidth, height: badgeHeight };
     if (outputFilePath) {
         options = { ...options, filename: outputFilePath };
     }

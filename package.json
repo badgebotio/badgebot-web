@@ -7,6 +7,7 @@
         "app-root-path": "^2.2.1",
         "async": "^3.1.0",
         "convert-svg-to-png": "^0.5.0",
+        "dotenv": "^8.1.0",
         "gists": "^2.0.0",
         "moment": "^2.24.0",
         "svg.js": "^2.7.1",

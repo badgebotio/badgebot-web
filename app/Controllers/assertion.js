@@ -33,8 +33,6 @@ exports.read = function(req,res, next){
             evidence = gist.evidence.id;
             evidenceNarrative = gist.evidence.narrative;
             issuedOn = moment(gist.issuedOn).format('YYYY-MM-DD HH:mm:ss'); 
-            width = 400;
-            height = 400;
 
             var file = fs.createWriteStream("badgeImage.svg");
 
@@ -50,7 +48,7 @@ exports.read = function(req,res, next){
                         //});
                         badgeSVG = body;
 
-                        convertSvgToPng(body, width, height, []).then((png) => {
+                        convertSvgToPng(body, []).then((png) => {
                             const base64data = Buffer.from(png).toString('base64');
                             //console.log("here is base64png", base64data);
                             badgeImage = base64data;
