@@ -1,4 +1,5 @@
 .DS_Store
+badgeImage.svg
 .env
 config/config.js
 config/github.js
