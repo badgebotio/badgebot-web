@@ -19,6 +19,8 @@ var gistsUsername = process.env.GITHUB_USERNAME;
 
 exports.read = function(req,res, next){
 
+    var assertionUrl = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+req.params.assertionId+'/raw';
+
     async.waterfall([
         getGist, //assertion
         getBadge
@@ -69,7 +71,8 @@ exports.read = function(req,res, next){
                             earner: earner,
                             issuedOn: issuedOn,
                             evidence: evidence,
-                            evidenceNarrative: evidenceNarrative 
+                            evidenceNarrative: evidenceNarrative,
+                            assertionUrl: assertionUrl
                         });
                     });
                 });
@@ -78,8 +81,8 @@ exports.read = function(req,res, next){
     });
 
     function getGist(callback) {
-        var assertionId = req.params.assertionId;
-        request('https://gist.githubusercontent.com/'+gistsUsername+'/'+assertionId+'/raw',
+       // var assertionId = req.params.assertionId;
+        request(assertionUrl,
         
         function(err,response,body) {
             if(err) callback(err);

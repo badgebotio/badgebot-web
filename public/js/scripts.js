@@ -120,3 +120,19 @@ $(function(){
         }); 
     });
 });
+
+function sendToBackpack() {
+  sendButton = document.querySelector('#sendToBadgrBackpack');
+  assertionUrl = sendButton.dataset.assertionUrl;
+
+  console.log("ASSERTION URL "+assertionUrl);
+
+  OpenBadges.issue([assertionUrl]);
+}
+
+submitButton = document.getElementById('sendToBadgrBackpack');
+submitButton.addEventListener('click', sendToBackpack);
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
