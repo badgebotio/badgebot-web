@@ -3,15 +3,23 @@ const https = require('https');
 const request = require("request");
 const convertSvgToPng = require("../helpers/svg-to-png.js");
 
+const dotenv = require('dotenv');
+dotenv.config();
+
+var gistsUsername = process.env.GITHUB_USERNAME;
+
 exports.read = function(req,res){
   var badgeClassGistId = req.params.gistId;
   console.log("badgeClassGistId "+req.params.gistId);
 
   //get badge class gist. Badgebot repo is using request-promise which is better.
 
-  request('https://gist.githubusercontent.com/badgebotio/'+badgeClassGistId+'/raw',
+  $requestUrl = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassGistId+'/raw';
+  console.log("Badge Class Gist "+$requestUrl);
+
+  request('https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassGistId+'/raw',
     function(err,response,body) {
-      if (err || response.statusCode != '200') res.status(404).send('Not found');
+if (err || response.statusCode != '200') res.status(404).send('Not found');
             
       var badge = JSON.parse(body);
   
@@ -20,7 +28,7 @@ exports.read = function(req,res){
 
       var file = fs.createWriteStream("badgeImage.svg");
 
-      https.get('https://gist.githubusercontent.com/badgebotio/d63c82ce789bef941d834293d1fe1a74/raw/b04ff4e83dbb488e8f3958bb6eb4c4c9fb8cbcec/you-rock-badge.svg',function(response) {
+      https.get(badge.image,function(response) {
         response.setEncoding('utf8');
           var body = '';
           response.on('data', function (chunk) {

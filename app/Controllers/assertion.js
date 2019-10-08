@@ -12,6 +12,11 @@ var bbGists = [];
 
 const logger = require('../../config/winston');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
+var gistsUsername = process.env.GITHUB_USERNAME;
+
 exports.read = function(req,res, next){
 
     async.waterfall([
@@ -36,7 +41,7 @@ exports.read = function(req,res, next){
 
             var file = fs.createWriteStream("badgeImage.svg");
 
-            https.get('https://gist.githubusercontent.com/badgebotio/d63c82ce789bef941d834293d1fe1a74/raw/b04ff4e83dbb488e8f3958bb6eb4c4c9fb8cbcec/you-rock-badge.svg',function(response) {
+            https.get(badge.image,function(response) {
                 response.setEncoding('utf8');
                 var body = '';
                 response.on('data', function (chunk) {
@@ -74,7 +79,7 @@ exports.read = function(req,res, next){
 
     function getGist(callback) {
         var assertionId = req.params.assertionId;
-        request('https://gist.githubusercontent.com/badgebotio/'+assertionId+'/raw',
+        request('https://gist.githubusercontent.com/'+gistsUsername+'/'+assertionId+'/raw',
         
         function(err,response,body) {
             if(err) callback(err);
