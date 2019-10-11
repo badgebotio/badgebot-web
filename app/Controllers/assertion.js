@@ -8,7 +8,7 @@ const moment  = require('moment');
 const async = require("async");
 const convertSvgToPng = require("../helpers/svg-to-png.js");
 const _ = require('underscore');
-const bakery = require('openbadges-bakery'); 
+//const bakery = require('openbadges-bakery'); 
 /** this is the unofficial bakery because the official one isn't supported by Mozilla anymore **/
 
 var bbGists = [];
@@ -46,7 +46,7 @@ exports.read = function(req,res, next){
             badgeFileName = badge.hashtag_id+'-'+earner+'-'+gist.issuedOn+'.png';
 
 
-            if (req.params.download) {
+           /* if (req.params.download) {
                // console.log("download this badge " +JSON.stringify(badge));
 
                 const file = Buffer(badgeImage, 'base64');
@@ -63,7 +63,7 @@ exports.read = function(req,res, next){
                         return;
                 });
             }
-            else {
+            else {*/
 
                 return res.render('assertion', {
                     id: req.params.assertionId,
@@ -77,7 +77,7 @@ exports.read = function(req,res, next){
                     evidenceNarrative: evidenceNarrative,
                     assertionUrl: assertionUrl
                 });
-            }
+          //  }
         }
     });
 
