@@ -19,6 +19,6 @@ module.exports = function (app) {
   app.get('/badges/', badges.read);
 
   //Badge Assertion Display
-  app.get('/earned/:assertionId', assertion.read);
+  app.get('/earned/:assertionId/:download?', assertion.read);
 
 };

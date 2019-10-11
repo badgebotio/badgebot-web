@@ -13,6 +13,7 @@
         "gists": "^2.0.0",
         "moment": "^2.24.0",
         "morgan": "^1.9.1",
+        "openbadges-bakery": "file:./custom_node_modules/openbadges-bakery",
         "supervisor": "^0.12.0",
         "svg.js": "^2.7.1",
         "svgdom": "0.0.20",

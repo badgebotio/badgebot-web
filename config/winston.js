@@ -2,7 +2,7 @@ const appRoot = require('app-root-path');
 const winston = require('winston');
 
 var options = {
-    infoFile: {
+   /* infoFile: {
         level: 'info',
         filename: `${appRoot}/logs/info.log`,
         handleExceptions: true,
@@ -10,7 +10,7 @@ var options = {
         maxsize: 5242880, // 5MB
         maxFiles: 5,
         colorize: false,
-    },
+    },*/
     errorFile: {
         level: 'error',
         filename: `${appRoot}/logs/error.log`,
@@ -18,7 +18,7 @@ var options = {
         json: true,
         maxsize: 5242880, // 5MB
         maxFiles: 5,
-        colorize: false,
+        colorize: true,
     },
     console: {
         level: 'debug',
@@ -30,7 +30,7 @@ var options = {
 
 var logger = winston.createLogger({
     transports: [
-        new winston.transports.File(options.infoFile),
+       // new winston.transports.File(options.infoFile),
         new winston.transports.File(options.errorFile),
         new winston.transports.Console(options.console)
     ],

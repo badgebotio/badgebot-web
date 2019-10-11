@@ -1742,8 +1742,8 @@ fieldset:disabled a.btn {
     .show > .btn-success.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(180, 180, 184, 0.5); }
 
-.btn-info {
-    color: #fff;
+.btn-info, a.btn-info {
+    color: #fff !important;
     background-color: #29ABE0;
     border-color: #29ABE0;
 }   

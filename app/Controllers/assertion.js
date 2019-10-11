@@ -8,6 +8,9 @@ const moment  = require('moment');
 const async = require("async");
 const convertSvgToPng = require("../helpers/svg-to-png.js");
 const _ = require('underscore');
+const bakery = require('openbadges-bakery'); 
+/** this is the unofficial bakery because the official one isn't supported by Mozilla anymore **/
+
 var bbGists = [];
 
 const logger = require('../../config/winston');
@@ -23,8 +26,9 @@ exports.read = function(req,res, next){
 
     async.waterfall([
         getGist, //assertion
-        getBadge
-    ], function (err, gist, badge) {
+        getBadge,
+        getBadgeImage
+    ], function (err, gist, badge, badgeImage) {
 
         if (err) {
             logger.error("File: "+__filename+" Error: "+err.message);
@@ -35,53 +39,49 @@ exports.read = function(req,res, next){
             earner = gist.recipient.identity;
             earner = earner.replace('https://twitter.com/','');
             title = badge.name+" Earned by @"+earner;
-            localBadgeFileName = badge.badgebotName;
             issuerName = badge.issuer.name;
             evidence = gist.evidence.id;
             evidenceNarrative = gist.evidence.narrative;
             issuedOn = moment(gist.issuedOn).format('YYYY-MM-DD HH:mm:ss'); 
+            badgeFileName = badge.hashtag_id+'-'+earner+'-'+gist.issuedOn+'.png';
 
-            var file = fs.createWriteStream("badgeImage.svg");
 
-            https.get(badge.image,function(response) {
-                response.setEncoding('utf8');
-                var body = '';
-                response.on('data', function (chunk) {
-                    body += chunk;
+            if (req.params.download) {
+               // console.log("download this badge " +JSON.stringify(badge));
+
+                const file = Buffer(badgeImage, 'base64');
+                bakery.bake({
+                    image: file,
+                    assertion: gist}, 
+                    function (err,imageData) {
+                       // console.log("ERR "+err);
+                        console.log("imageData "+JSON.stringify(imageData));
+                        res.set('Content-Type', 'image/png')
+                        res.set('Content-Disposition', 'attachment; filename='+badgeFileName+'');
+                        res.set('Content-Length', imageData.length);
+                        res.end(imageData, 'binary');
+                        return;
                 });
-                badgeSVGFile = response.pipe(file);
-                response.on('end', function () {
-                   // console.log('BODY: ' + body);
-                        //});
-                        badgeSVG = body;
+            }
+            else {
 
-                        convertSvgToPng(body, []).then((png) => {
-                            const base64data = Buffer.from(png).toString('base64');
-                            //console.log("here is base64png", base64data);
-                            badgeImage = base64data;
-
-                        return res.render('assertion', {
-                            id: req.params.assertionId,
-                            title: title,
-                            description: badge.description,
-                            // badge: badgeFile,
-                            badgeImage: badgeImage,
-                            badgeSVGFile: badgeSVGFile,
-                            badgeSVG: badgeSVG,
-                            earner: earner,
-                            issuedOn: issuedOn,
-                            evidence: evidence,
-                            evidenceNarrative: evidenceNarrative,
-                            assertionUrl: assertionUrl
-                        });
-                    });
+                return res.render('assertion', {
+                    id: req.params.assertionId,
+                    title: title,
+                    description: badge.description,
+                    badgeImage: badgeImage,
+                    badgeFileName: badgeFileName,
+                    earner: earner,
+                    issuedOn: issuedOn,
+                    evidence: evidence,
+                    evidenceNarrative: evidenceNarrative,
+                    assertionUrl: assertionUrl
                 });
-            });
+            }
         }
     });
 
-    function getGist(callback) {
-       // var assertionId = req.params.assertionId;
+    function getGist (callback) {
         request(assertionUrl,
         
         function(err,response,body) {
@@ -109,6 +109,31 @@ exports.read = function(req,res, next){
             
             callback(null,gist,badge);
             
+        });
+    }
+
+    function getBadgeImage(gist, badge, callback) {
+
+        var file = fs.createWriteStream("badgeImage.svg");
+
+        https.get(badge.image,function(response) {
+            response.setEncoding('utf8');
+            var body = '';
+            response.on('data', function (chunk) {
+                body += chunk;
+            });
+            badgeSVGFile = response.pipe(file);
+            response.on('end', function () {
+                badgeSVG = body;
+
+                convertSvgToPng(body, []).then((png) => {
+                    const base64data = Buffer.from(png).toString('base64');
+                    //console.log("here is base64png", base64data);
+                    badgeImage = base64data;
+
+                    callback(null, gist, badge, badgeImage);
+                });
+            });
         });
     }
 }

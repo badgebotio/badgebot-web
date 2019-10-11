@@ -24,9 +24,13 @@
                             <div class="pb-3">
                                 <strong>Evidence:</strong> <a href="<%= evidence %>" target="_blank" title="Badge evidence"><%= evidence %></a>
                             </div>
+
                             <div>
+                            <a class="btn btn-info btn-sm" href="/earned/<%= id %>/download" target="_parent">Download a verifiable Open Badge</a>
+                            </div>
+                      <!--      <div>
                                 <button type="button" class="btn btn-info btn-sm" id="sendToBadgrBackpack" data-assertion-url="<%- assertionUrl %>">Send to Badgr Backpack</button> <ion-icon name="information-circle" size="small" class="info-icon" data-toggle="tooltip" data-placement="right" title="Note to @<%- earner %> - Badgr will authenticate your Twitter account. If you have an existing Badgr Backpack account and would like to add this badge to it, first log in to Badgr and add your Twitter account then click this button. Otherwise, a new backpack account will be created."></ion-icon>
-                            </div> 
+                            </div> -->
                         </div>
                     </div>
 
@@ -64,7 +68,6 @@
                                 <div><strong>Hashtag:</strong> #<%- badge.hashtag_id %></div>
                                 <div><strong>Evidence:</strong> <%- criteria.evidence_required %></div>
             
-                                <!-- add an download the open badge if that is done in time -->
                             </div>
                         <% }); %>
                     </div>
