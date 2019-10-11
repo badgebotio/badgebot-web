@@ -1,0 +1,3 @@
+[submodule "openbadges-bakery"]
+	path = openbadges-bakery
+	url = https://github.com/kayaelle/openbadges-bakery.git
