@@ -6,6 +6,7 @@
     "dependencies": {
         "app-root-path": "^2.2.1",
         "async": "^3.1.0",
+        "bitwriter": "^1.0.0",
         "convert-svg-to-png": "^0.5.0",
         "dotenv": "^8.1.0",
         "ejs": "^2.7.1",
@@ -13,7 +14,7 @@
         "gists": "^2.0.0",
         "moment": "^2.24.0",
         "morgan": "^1.9.1",
-        "openbadges-bakery": "file:./custom_node_modules/openbadges-bakery",
+        "openbadges-bakery": "OpenWorksGroup/openbadges-bakery.git",
         "supervisor": "^0.12.0",
         "svg.js": "^2.7.1",
         "svgdom": "0.0.20",
