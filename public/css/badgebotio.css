@@ -6418,14 +6418,14 @@ h6 {
   font-weight: 500; }
 
 hr {
-  max-width: 150px;
-  border-width: 5px;
+  max-width: 60%;
+  border-width: 2px;
   opacity: 0.08;
   margin-top: 15px;
   margin-bottom: 25px; }
 
 hr.accent {
-  border-color: #fcf113;
+  border-color: #bedc93;
   opacity: 1; }
 
 hr.green {
