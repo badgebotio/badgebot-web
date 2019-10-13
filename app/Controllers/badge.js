@@ -10,12 +10,12 @@ var gistsUsername = process.env.GITHUB_USERNAME;
 
 exports.read = function(req,res){
   var badgeClassGistId = req.params.gistId;
-  console.log("badgeClassGistId "+req.params.gistId);
+ // console.log("badgeClassGistId "+req.params.gistId);
 
   //get badge class gist. Badgebot repo is using request-promise which is better.
 
   $requestUrl = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassGistId+'/raw';
-  console.log("Badge Class Gist "+$requestUrl);
+ // console.log("Badge Class Gist "+$requestUrl);
 
   request('https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassGistId+'/raw',
     function(err,response,body) {
@@ -23,8 +23,8 @@ if (err || response.statusCode != '200') res.status(404).send('Not found');
             
       var badge = JSON.parse(body);
   
-      console.log("BADGE ");
-      console.log(badge);
+     // console.log("BADGE ");
+     // console.log(badge);
 
       var file = fs.createWriteStream("badgeImage.svg");
 
