@@ -20,6 +20,8 @@ dotenv.config();
 
 var gistsUsername = process.env.GITHUB_USERNAME;
 
+var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
+
 exports.read = function(req,res, next){
 
     var assertionUrl = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+req.params.assertionId+'/raw';
@@ -44,6 +46,8 @@ exports.read = function(req,res, next){
             evidenceNarrative = gist.evidence.narrative;
             issuedOn = moment(gist.issuedOn).format('YYYY-MM-DD HH:mm:ss'); 
             badgeFileName = badge.hashtag_id+'-'+earner+'-'+gist.issuedOn+'.png';
+            badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
+
 
 
             if (req.params.download) {
@@ -69,8 +73,9 @@ exports.read = function(req,res, next){
                     id: req.params.assertionId,
                     title: title,
                     description: badge.description,
-                    badgeImage: badgeImage,
+                    //badgeImage: badgeImage,
                     badgeFileName: badgeFileName,
+                    badgeImageURL: badgeImageURL,
                     earner: earner,
                     issuedOn: issuedOn,
                     evidence: evidence,
@@ -113,8 +118,30 @@ exports.read = function(req,res, next){
     }
 
     function getBadgeImage(gist, badge, callback) {
+        var imageRequest = require('request').defaults({ encoding: null });
+        var badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
 
-        var file = fs.createWriteStream("badgeImage.svg");
+        imageRequest.get(badgeImageURL, function (err, response, body) {
+
+            if (!err && response.statusCode == 200) {
+
+                badgeImage = new Buffer(body).toString('base64');
+                
+                callback(null, gist, badge, badgeImage);
+            }
+            else {
+                next(err);
+            }
+        });
+
+    }
+
+   /* 
+    Using a hosted PNG file for now
+
+   function getBadgeImage(gist, badge, callback) {
+
+        var file = fs.createWriteStream("./images/"+hashtag_id+"");
 
         https.get(badge.image,function(response) {
             response.setEncoding('utf8');
@@ -135,5 +162,5 @@ exports.read = function(req,res, next){
                 });
             });
         });
-    }
+    }*/
 }

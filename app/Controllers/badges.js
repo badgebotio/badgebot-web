@@ -10,6 +10,7 @@ dotenv.config();
 
 var gistsUsername = process.env.GITHUB_USERNAME;
 var badgeClassListGistId = process.env.BADGE_CLASS_LIST_GIST_ID;
+var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
 
 
 exports.read = function(req,res){
@@ -32,7 +33,12 @@ exports.read = function(req,res){
                     var badge = JSON.parse(body);
                     badge.gistId = badgeGistId;
 
-                    var file = fs.createWriteStream("badgeImage.svg");
+                    //badge.badgeImage = base64data;
+                    badge.badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
+                    badges.push(badge);
+                    callback();
+
+                   /** var file = fs.createWriteStream("badgeImage.svg");
 
                     https.get(badge.image,function(response) {
                         response.setEncoding('utf8');
@@ -53,7 +59,7 @@ exports.read = function(req,res){
                                 callback();
                             });
                         });
-                    });
+                    });**/
                 });
             }, function(){
                // console.log("Badges Length" +badges.length);

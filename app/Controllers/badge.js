@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 var gistsUsername = process.env.GITHUB_USERNAME;
+var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
 
 exports.read = function(req,res){
   var badgeClassGistId = req.params.gistId;
@@ -22,11 +23,12 @@ exports.read = function(req,res){
       if (err || response.statusCode != '200') res.status(404).send('Not found');
             
       var badge = JSON.parse(body);
+      var badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
   
      // console.log("BADGE ");
      // console.log(badge);
 
-      var file = fs.createWriteStream("badgeImage.svg");
+      /*var file = fs.createWriteStream("badgeImage.svg");
 
       https.get(badge.image,function(response) {
         response.setEncoding('utf8');
@@ -42,17 +44,17 @@ exports.read = function(req,res){
             convertSvgToPng(body, []).then((png) => {
             const base64data = Buffer.from(png).toString('base64');
 
-            badgeImage = base64data;
+            badgeImage = base64data;*/
 
-            return res.render('badge', {
-              title: badge.name, 
-              description: badge.description,
-              badge: badge,
-              badgeImage: badgeImage,
-            });
-          });
-        });
-      });
-    }
-  );
+    return res.render('badge', {
+      title: badge.name, 
+      description: badge.description,
+      badge: badge,
+      badgeImageURL: badgeImageURL
+      //badgeImage: badgeImage,
+    });
+         // });
+       // });
+     // });
+  });
 };
