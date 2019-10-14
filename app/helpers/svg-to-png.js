@@ -14,6 +14,7 @@ const badgeWidth = 400;
 module.exports = function(svgData) {
 
 const draw = SVG(document.documentElement);
+const rect = draw.rect(badgeWidth,badgeHeight).fill('#f6f7f7');
 const svg = draw.svg(svgData).width(badgeWidth).height(badgeHeight);
 
 return localConvert(svg.svg());
