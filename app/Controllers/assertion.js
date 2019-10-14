@@ -59,7 +59,7 @@ exports.read = function(req,res, next){
                     assertion: gist}, 
                     function (err,imageData) {
                        // console.log("ERR "+err);
-                        console.log("imageData "+JSON.stringify(imageData));
+                       // console.log("imageData "+JSON.stringify(imageData));
                         res.set('Content-Type', 'image/png')
                         res.set('Content-Disposition', 'attachment; filename='+badgeFileName+'');
                         res.set('Content-Length', imageData.length);
