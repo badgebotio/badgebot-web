@@ -6,6 +6,9 @@ const morgan = require('morgan');
 const winston = require('./config/winston');
 const bodyParser = require('body-parser');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -14,6 +17,13 @@ app.use(morgan('combined', { stream: winston.stream }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public/css')));
 app.use(express.static(path.join(__dirname, 'public/js')));
+app.use(function (req, res, next) {
+  res.locals = {
+      siteLogo: process.env.SITE_LOGO
+   };
+   next();
+});
+
 app.set('views', [path.join(__dirname, 'app/views')]);
 app.set('view engine', 'ejs');
 require('./routes.js')(app);
