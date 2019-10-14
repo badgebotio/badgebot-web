@@ -19,7 +19,7 @@ exports.read = function(req,res){
 
   request('https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassGistId+'/raw',
     function(err,response,body) {
-if (err || response.statusCode != '200') res.status(404).send('Not found');
+      if (err || response.statusCode != '200') res.status(404).send('Not found');
             
       var badge = JSON.parse(body);
   
