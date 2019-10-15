@@ -60,6 +60,19 @@ gists.all(function(err, res){
           earner = earner.replace('https://twitter.com/','');
           console.log("EARNER "+earner);
 
+          /** next:
+          -evidence
+          -issued
+          -badgeclass gist id
+
+          save to file
+
+          pull from file and generate map
+
+          save geolocation to apprpriate tweets
+
+          **
+
         }
       );    
 
