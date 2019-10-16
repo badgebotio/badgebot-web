@@ -1,5 +1,5 @@
 var Gists = require('gists');
-const ghConfig = require('../../config/github');
+const ghConfig = require('../../config/github'); //Future Issue: update to dotenv now
 const gists = new Gists(ghConfig);
 const request = require("request");
 const fs = require('fs');
@@ -23,8 +23,8 @@ var gistsUsername = process.env.GITHUB_USERNAME;
 var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
 
 exports.read = function(req,res, next){
-
-    var assertionUrl = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+req.params.assertionId+'/raw';
+    var assertionUrl = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+req.params.assertionId;
+    var assertionUrlRaw = 'https://gist.githubusercontent.com/'+gistsUsername+'/'+req.params.assertionId+'/raw';
 
     async.waterfall([
         getGist, //assertion
@@ -80,14 +80,15 @@ exports.read = function(req,res, next){
                     issuedOn: issuedOn,
                     evidence: evidence,
                     evidenceNarrative: evidenceNarrative,
-                    assertionUrl: assertionUrl
+                    assertionUrl: assertionUrl,
+                    assertionUrlRaw: assertionUrlRaw
                 });
             }
         }
     });
 
     function getGist (callback) {
-        request(assertionUrl,
+        request(assertionUrlRaw,
         
         function(err,response,body) {
             if(err) callback(err);
