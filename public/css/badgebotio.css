@@ -7263,6 +7263,17 @@ img::-moz-selection {
   height: 70%;
 }
 
+.map-badge-image {
+  width: 20%;
+  float: left;
+}
+
+.map-assertion-info {
+  width: 80%;
+  float: right;
+  display: inline-block;
+}
+
 .twitter-timeline {
     width: 50vw !important;
 }
@@ -7271,3 +7282,8 @@ img::-moz-selection {
   color: orange;
   cursor: pointer;
 }
+
+#map {
+  height: 100vw;  /* The height is 400 pixels */
+  width: 100%;  /* The width is the width of the web page */
+ }

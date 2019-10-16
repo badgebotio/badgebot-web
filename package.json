@@ -4,6 +4,7 @@
     "description": "",
     "main": "app.js",
     "dependencies": {
+        "@google/maps": "^1.0.1",
         "app-root-path": "^2.2.1",
         "async": "^3.1.0",
         "bitwriter": "^1.0.0",
