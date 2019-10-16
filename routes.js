@@ -2,6 +2,7 @@ var about = require('./app/Controllers/about');
 var assertion = require('./app/Controllers/assertion');
 var badge = require('./app/Controllers/badge');
 var badges = require('./app/Controllers/badges');
+var earnersMap = require('./app/Controllers/earnersMap');
 var landing = require('./app/Controllers/landing');
 
 module.exports = function (app) {
@@ -15,10 +16,13 @@ module.exports = function (app) {
   //Badge Description Display
   app.get('/badge/:gistId', badge.read);
 
-    //List of Badges
+  //List of Badges
   app.get('/badges/', badges.read);
 
   //Badge Assertion Display
   app.get('/earned/:assertionId/:download?', assertion.read);
+
+  //Badge Earners Map Display
+  app.get('/earners-map/:badgeClassId', earnersMap.read);
 
 };
