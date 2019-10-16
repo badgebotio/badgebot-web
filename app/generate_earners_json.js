@@ -12,35 +12,16 @@ gists = new Gists({
     password: process.env.GITHUB_PASSWORD
 });
 
-/*function JSONStringify(object) {
-    var cache = [];        
-    var str = JSON.stringify(object,
-        // custom replacer fxn - gets around "TypeError: Converting circular structure to JSON" 
-        function(key, value) {
-            if (typeof value === 'object' && value !== null) {
-                if (cache.indexOf(value) !== -1) {
-                    // Circular reference found, discard key
-                    return;
-                }
-                // Store value in our collection
-                cache.push(value);
-            }
-            return value;
-        }, 4);
-    cache = null; // enable garbage collection
-    return str;
-};
-
-console.log("USERNAME "+gistsUsername);*/
-
 /**
 
 Assumptions: 
 - Only getting first page of results for prototype. Future issue: pagination
 - There is only one file per gist**/
 
+var earners = [];
+
 gists.all(function(err, res){
-  console.log("GISTS Body "+ JSON.stringify(res.body));
+ // console.log("GISTS Body "+ JSON.stringify(res.body));
   var gistResults = res.body;
   async.each(gistResults, function(gist, callback) {
     var filename = Object.keys(gist.files)[0];
@@ -57,37 +38,57 @@ gists.all(function(err, res){
           assertion = JSON.parse(body);
            // console.log("ASSERTION "+assertion );
           earner = assertion.recipient.identity;
-          earner = earner.replace('https://twitter.com/','');
-          console.log("EARNER "+earner);
+          var username = earner.replace('https://twitter.com/','');
+          var evidence = assertion.evidence;
+          var issuedOn = assertion.issuedOn;
 
-          /** next:
-          -evidence
-          -issued
-          -badgeclass gist id
+          var badgeclass_raw_url = assertion.badge.split('/');
+          var badgeClassGistId = badgeclass_raw_url[4];
+          //console.log("username "+username);
+          //console.log("assertionGistId "+assertionGistId);
+          //console.log("evidence "+JSON.stringify(evidence));
+          //console.log("badgeClassGistId "+badgeClassGistId);
 
-          save to file
+          var earner = {
+            "username": username,
+            "assertionGistId": assertionGistId,
+            "evidence": evidence,
+            "issuedOn":assertion.issuedOn,
+            "badgeClassGistId": badgeClassGistId
+          };
 
-          pull from file and generate map
+          //if (assertion['schema:location']) console.log(JSON.stringify(assertion['schema:location'].geo));
 
-          save geolocation to apprpriate tweets
+          if (assertion['schema:location']) earner.geo = assertion['schema:location'].geo;
 
-          **
 
+          earners.push(earner);
+
+          fs.writeFile( "earners.json", JSON.stringify( earners ), "utf8", (err) => {
+            if (err) callback(err);
+            callback();
+          });
         }
       );    
-
-            //earner = gist.recipient.identity;
-      //earner = earner.replace('https://twitter.com/','');   
+  
     }
-        callback();
     
-  }, function (){
-
+  }, function (err){
+    console.log("Complete: earners.json");
   });
 });
 
 
 /**
+
+next:
+
+
+save to file
+
+pull from file and generate map
+save geolocation to apprpriate tweets
+
 
 This script will generate a file that will export a json array of earners to be used for
 - earners list
@@ -114,8 +115,8 @@ myJson = require("./filename.json");
 
 var earnersArr = [
 {
-username: "@kayaelle", //earner
-assertionGistId: "8f99d2cf70238ef3d3fb458ba0885a82", //assertion
+-username: "@kayaelle", //earner
+-assertionGistId: "8f99d2cf70238ef3d3fb458ba0885a82", //assertion
 "evidence":{
     "id":"https://twitter.com/sadhappyboto/status/1183872777989873664",
     "narrative":"Issued on Twitter by Badgebot from <a href=\"https://twitter.com/sadhappyboto\">@sadhappyboto</a>"

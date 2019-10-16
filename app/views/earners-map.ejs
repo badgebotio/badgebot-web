@@ -1,0 +1,85 @@
+<% include _shared/header %> 
+    <div class="container container-margin-top-40">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mt-3 mb-3"><%= title %></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="map"></div>
+                <script>
+
+                // Future Issue: circular icons: http://jsfiddle.net/geocodezip/DVKEj/584//
+                var map;
+                var mapEarners = <%- JSON.stringify(mapEarners) %>;
+                var badgeImageURL = <%- JSON.stringify(badgeImage) %>;
+
+                //var badgeImageURL = "https://badgebot.s3.amazonaws.com/badge-images/yourockbadge-image.png";
+
+                function initMap() {
+                    map = new google.maps.Map(
+                        document.getElementById('map'),
+                        {center: new google.maps.LatLng(mapEarners[0].geo.latitude, mapEarners[0].geo.longitude), 
+                        zoom: 3
+                    }); 
+                    //trying centering on first earner location
+
+                   // var markers = [];
+
+                    var infowindow = new google.maps.InfoWindow();
+
+                    for (var i = 0; i < mapEarners.length; i++) {
+
+                        var contentString = 
+                            '<div class="map-badge-image">'+
+                            '<img class="image-fluid displayed-badge-image" src="'+badgeImageURL+'" alt=" image">'+
+                            '</div>'+
+                            '<div class="map-assertion-info">'+
+                            '<div class="pb-3">'+
+                            '<strong>Earned by: </strong>'+
+                            '<a href="https://twitter.com/'+mapEarners[i].username+'" target="_blank">'+
+                            mapEarners[i].username+'</a>'+
+                            '</div>'+
+                            '<div class="pb-3">'+
+                            mapEarners[i].evidence.narrative + ' on ' +
+                            mapEarners[i].issuedOn +
+                            '</div>'+
+                            '<div class="pb-3">'+
+                            'Evidence tweet: <a href="'+mapEarners[i].evidence.id+'" target="_blank">'+
+                            mapEarners[i].evidence.id +'</a>'+
+                            '</div>'+
+                            '</div>';
+
+                        var image = { 
+                            url: 'https://avatars.io/twitter/'+mapEarners[i].username+'/small',
+                            scaledSize: new google.maps.Size(20, 20),
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(0, 32)
+                        };
+
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(mapEarners[i].geo.latitude, mapEarners[i].geo.longitude),
+                            icon: image,
+                            content: contentString,
+                            id: i,
+                            map: map
+                        });
+
+                        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                            return function() {
+                                infowindow.setContent(marker.content);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
+                    };
+                }
+                </script>
+                <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArcAHadWDfNRZpoZY6DyEWOeR8fN7yhY8&callback=initMap">
+                </script>
+
+            </div>
+        </div>
+    </div>
+<% include _shared/footer %> 
