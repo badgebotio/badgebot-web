@@ -1,6 +1,4 @@
 var Gists = require('gists');
-const ghConfig = require('../../config/github'); //Future Issue: update to dotenv now
-const gists = new Gists(ghConfig);
 const request = require("request");
 const fs = require('fs');
 const https = require('https');
@@ -19,6 +17,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 var gistsUsername = process.env.GITHUB_USERNAME;
+
+const gists = new Gists({
+    username: gistsUsername, 
+    password: process.env.GITHUB_PASSWORD
+});
 
 var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
 
