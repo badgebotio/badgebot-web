@@ -77,4 +77,3 @@ gists.all(function(err, res){
     console.log("Complete: earners.json");
   });
 });
-
