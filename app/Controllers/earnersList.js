@@ -17,13 +17,13 @@ var badgeClassId = req.params.badgeClassId;
             request('https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassId+'/raw',
                 function(err,response,body) {
                     var badge = JSON.parse(body);
-                    var badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
-                    callback(null,badgeImageURL);
+                    badge.badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
+                    callback(null,badge);
                 }
             );
         },
 
-        function (badgeImageURL, callback) {
+        function (badge, callback) {
 
             earnersArrJSON = require("../earners.json");
             earnersArr = [];
@@ -44,11 +44,11 @@ var badgeClassId = req.params.badgeClassId;
 
                 //console.log("MAP Earners: "+JSON.stringify(mapEarnersArr));
 
-                callback(null, badgeImageURL, earnersArr);
+                callback(null, badge, earnersArr);
             });
         }
     ],
-    function(err, badgeImageURL, earnersArr) {
+    function(err, badge, earnersArr) {
 
         if (err) {
             console.log("EARNERS MAP "+err);
@@ -58,10 +58,11 @@ var badgeClassId = req.params.badgeClassId;
        // console.log(badgeImageURL);
 
         return res.render('earners-list', {
-            title: "BadgeBot Badges Earners", 
-            description: "Earners List", 
+            title: badge.name + " Earners", 
+            description: badge.name + " Earners List", 
+            countEarners: earnersArr.length,
             earners: earnersArr,
-            badgeImage: badgeImageURL
+            badge: badge
         });
 
     });

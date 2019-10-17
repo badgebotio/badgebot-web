@@ -6,12 +6,12 @@
             <div class="row container-margin-top-40 container-margin-bottom-40">
                 <div class="col-lg-4">
                     <div class="my-1 text-center">
-                    <img class="image-fluid displayed-badge-image" src="<%= badgeImage %>" alt="badge image" />
+                    <img class="image-fluid displayed-badge-image" src="<%= badge.badgeImageURL %>" alt="<%= badge.name %> Image" />
                     </div>
+                    <h5 class="pt-3 text-center">Number of Earners: <%- countEarners %> </h5>
                 </div>
 
                 <div class="col-lg-8 product-detail">
-                    <div class="container-margin-bottom-40">&nbsp;</div>
                     <% earners.forEach(function(earner){ %>
                     <div class="row">
                         <div class="col-12 pb-3">
