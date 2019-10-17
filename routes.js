@@ -3,6 +3,7 @@ var assertion = require('./app/Controllers/assertion');
 var badge = require('./app/Controllers/badge');
 var badges = require('./app/Controllers/badges');
 var earnersMap = require('./app/Controllers/earnersMap');
+var earnersList = require('./app/Controllers/earnersList');
 var landing = require('./app/Controllers/landing');
 
 module.exports = function (app) {
@@ -24,5 +25,8 @@ module.exports = function (app) {
 
   //Badge Earners Map Display
   app.get('/earners-map/:badgeClassId', earnersMap.read);
+
+  //Badge Earners LIst Display
+  app.get('/earners-list/:badgeClassId', earnersList.read);
 
 };

@@ -8,7 +8,7 @@ var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
 
 exports.read = function(req,res){
 
-    var badgeClassId = req.params.badgeClassId;
+var badgeClassId = req.params.badgeClassId;
 
     async.waterfall([
         function(callback) {
@@ -16,7 +16,6 @@ exports.read = function(req,res){
 
             request('https://gist.githubusercontent.com/'+gistsUsername+'/'+badgeClassId+'/raw',
                 function(err,response,body) {
-
                     var badge = JSON.parse(body);
                     var badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
                     callback(null,badgeImageURL);
@@ -27,17 +26,15 @@ exports.read = function(req,res){
         function (badgeImageURL, callback) {
 
             earnersArrJSON = require("../earners.json");
-            mapEarnersArr = [];
+            earnersArr = [];
 
             async.each(earnersArrJSON, function(earner, callback) {
 
                 if (earner.badgeClassGistId === badgeClassId ) {
 
-                    if (earner.geo) {
-                       // console.log("USERNAME: "+earner.username);
+                    //console.log("USERNAME: "+earner.username);
 
-                        mapEarnersArr.push(earner);   
-                    }
+                    earnersArr.push(earner);   
                 }
                 callback();
             },
@@ -47,11 +44,11 @@ exports.read = function(req,res){
 
                 //console.log("MAP Earners: "+JSON.stringify(mapEarnersArr));
 
-                callback(null, badgeImageURL, mapEarnersArr);
+                callback(null, badgeImageURL, earnersArr);
             });
         }
     ],
-    function(err, badgeImageURL, mapEarnersArr) {
+    function(err, badgeImageURL, earnersArr) {
 
         if (err) {
             console.log("EARNERS MAP "+err);
@@ -60,10 +57,10 @@ exports.read = function(req,res){
 
        // console.log(badgeImageURL);
 
-        return res.render('earners-map', {
-            title: "BadgeBot Badges", 
+        return res.render('earners-list', {
+            title: "BadgeBot Badges Earners", 
             description: "Earners List", 
-            mapEarners: mapEarnersArr,
+            earners: earnersArr,
             badgeImage: badgeImageURL
         });
 
