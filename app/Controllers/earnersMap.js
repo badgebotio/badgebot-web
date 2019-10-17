@@ -18,13 +18,13 @@ exports.read = function(req,res){
                 function(err,response,body) {
 
                     var badge = JSON.parse(body);
-                    var badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
-                    callback(null,badgeImageURL);
+                    badge.badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
+                    callback(null,badge);
                 }
             );
         },
 
-        function (badgeImageURL, callback) {
+        function (badge, callback) {
 
             earnersArrJSON = require("../earners.json");
             mapEarnersArr = [];
@@ -47,11 +47,11 @@ exports.read = function(req,res){
 
                 //console.log("MAP Earners: "+JSON.stringify(mapEarnersArr));
 
-                callback(null, badgeImageURL, mapEarnersArr);
+                callback(null, badge, mapEarnersArr);
             });
         }
     ],
-    function(err, badgeImageURL, mapEarnersArr) {
+    function(err, badge, mapEarnersArr) {
 
         if (err) {
             console.log("EARNERS MAP "+err);
@@ -61,10 +61,10 @@ exports.read = function(req,res){
        // console.log(badgeImageURL);
 
         return res.render('earners-map', {
-            title: "BadgeBot Badges", 
-            description: "Earners List", 
+            title: badge.name + " Earners", 
+            description: badge.name + " Earners Map", 
             mapEarners: mapEarnersArr,
-            badgeImage: badgeImageURL
+            badge: badge
         });
 
     });

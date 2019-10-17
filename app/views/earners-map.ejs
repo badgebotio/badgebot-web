@@ -13,9 +13,7 @@
                 // Future Issue: circular icons: http://jsfiddle.net/geocodezip/DVKEj/584//
                 var map;
                 var mapEarners = <%- JSON.stringify(mapEarners) %>;
-                var badgeImageURL = <%- JSON.stringify(badgeImage) %>;
-
-                //var badgeImageURL = "https://badgebot.s3.amazonaws.com/badge-images/yourockbadge-image.png";
+                var badgeImageURL = <%- JSON.stringify(badge.badgeImageURL) %>;
 
                 function initMap() {
                     map = new google.maps.Map(
