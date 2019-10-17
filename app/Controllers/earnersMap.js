@@ -6,6 +6,8 @@ const async = require("async");
 var gistsUsername = process.env.GITHUB_USERNAME;
 var s3URL = process.env.S3_BUCKET_URL+process.env.S3_BADGE_IMAGES_FOLDER;
 
+var googleMapsKey = process.env.GOOGLE_MAPS_CLIENT;
+
 exports.read = function(req,res){
 
     var badgeClassId = req.params.badgeClassId;
@@ -64,7 +66,8 @@ exports.read = function(req,res){
             title: badge.name + " Earners", 
             description: badge.name + " Earners Map", 
             mapEarners: mapEarnersArr,
-            badge: badge
+            badge: badge,
+            googleMapsKey: googleMapsKey
         });
 
     });
