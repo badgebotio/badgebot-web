@@ -17,6 +17,11 @@
                     <p><%- badge.criteria.narrative %></p>
 
                     <p class="smaller-text"><%- badge.support_description %></p>
+
+                     <div class="pt-3">
+                        <a href="/earners-list/<%- badge.gistId %>">View earners</a> &nbsp; 
+                        <% if (badge.criteria.details[0].logic_function == "tweet_text_self") { %> <a href="/earners-map/<%- badge.gistId %>">View map of earners</a> <% } %>
+                    </div>
         
                 </div>
             </div>

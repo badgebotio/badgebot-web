@@ -10,6 +10,7 @@
             <div class="text-center pb-3">
                 <img class="image-fluid displayed-badge-image" src="<%= badgeImageURL %>" alt="<%= badge.badge_name %> image" />
             </div>
+
             <div class="d-none d-lg-block">
                 <div class="pb-3">
                     <strong>Badge Data:</strong> <a style="overflow-wrap: break-word;" href="<%- assertionUrl %>" target="_blank"><%- assertionUrl %></a>
@@ -17,6 +18,11 @@
                 <div>
                     <a class="btn btn-info btn-sm" href="/earned/<%= id %>/download" target="_parent">Download a Verifiable Open Badge</a>
                 </div>
+            </div>
+
+            <div class="pt-3">
+                <a href="/earners-list/<%- badgeGistId %>">View earners</a> &nbsp; 
+                <% if (badge.criteria.details[0].logic_function == "tweet_text_self") { %> <a href="/earners-map/<%- badgeGistId %>">View map of earners</a> <% } %>
             </div>
         </div>
         <div class="col-md-7">

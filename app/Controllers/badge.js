@@ -23,6 +23,7 @@ exports.read = function(req,res){
       if (err || response.statusCode != '200') res.status(404).send('Not found');
             
       var badge = JSON.parse(body);
+      badge.gistId = badgeClassGistId;
       var badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
   
      // console.log("BADGE ");

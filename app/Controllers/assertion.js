@@ -48,7 +48,8 @@ exports.read = function(req,res, next){
             badgeFileName = badge.hashtag_id+'-'+earner+'-'+gist.issuedOn+'.png';
             badgeImageURL = s3URL+"/"+badge.hashtag_id+"-image.png";
 
-
+            var badgeclass_raw_url = gist.badge.split('/');
+            var badgeClassGistId = badgeclass_raw_url[4];
 
             if (req.params.download) {
                // console.log("download this badge " +JSON.stringify(badge));
@@ -76,6 +77,7 @@ exports.read = function(req,res, next){
                     //badgeImage: badgeImage,
                     badgeFileName: badgeFileName,
                     badgeImageURL: badgeImageURL,
+                    badgeGistId: badgeClassGistId,
                     earner: earner,
                     issuedOn: issuedOn,
                     evidence: evidence,
