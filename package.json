@@ -6,7 +6,7 @@
     "dependencies": {
         "@google/maps": "^1.0.1",
         "app-root-path": "^2.2.1",
-        "async": "^3.1.0",
+        "async": "^3.2.2",
         "bitwriter": "^1.0.0",
         "convert-svg-to-png": "^0.5.0",
         "dotenv": "^8.1.0",
